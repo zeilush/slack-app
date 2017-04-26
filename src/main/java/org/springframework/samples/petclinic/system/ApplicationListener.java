@@ -27,8 +27,8 @@ public class ApplicationListener implements InitializingBean, DisposableBean {
     @Override
     public void destroy() throws Exception {
         run = false;
-        System.out.println("I am destroyed");
-        sendNotification("I am destroyed");
+        System.out.println("Self destruct sequence initiated");
+        sendNotification("Self destruct sequence initiated");
     }
 
     @Override
@@ -50,7 +50,7 @@ public class ApplicationListener implements InitializingBean, DisposableBean {
             }
             System.out.println("Stopping sending alive requests");
         });
-        System.out.println("I am initialized");
+        System.out.println("I am alive");
     }
 
     private void sendNotification(String message) {
