@@ -84,6 +84,7 @@ class PetController {
         try (Socket conn = new Socket("a7a33c54.carbon.hostedgraphite.com", 2003)) {
             DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
             dos.writeBytes("5cfc61bb-3f1b-4229-a569-26fce2181f64.test.testing " + i++ + "\n");
+            System.out.println("test.testing: " + i);
             conn.close();
         } catch (UnknownHostException e) {
             e.printStackTrace();
