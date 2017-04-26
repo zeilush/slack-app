@@ -24,10 +24,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.Collection;
 
 /**
@@ -80,17 +76,7 @@ class PetController {
 
     @RequestMapping(value = "/pets/new", method = RequestMethod.POST)
     public String processCreationForm(Owner owner, @Valid Pet pet, BindingResult result, ModelMap model) {
-        //custom metric
-        try (Socket conn = new Socket("a7a33c54.carbon.hostedgraphite.com", 2003)) {
-            DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
-            dos.writeBytes("5cfc61bb-3f1b-4229-a569-26fce2181f64.test.testing " + i++ + "\n");
-            System.out.println("test.testing: " + i);
-            conn.close();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
 
         if (StringUtils.hasLength(pet.getName()) && pet.isNew() && owner.getPet(pet.getName(), true) != null) {
             result.rejectValue("name", "duplicate", "already exists");
