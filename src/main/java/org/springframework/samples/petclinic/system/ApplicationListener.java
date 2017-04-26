@@ -55,7 +55,6 @@ public class ApplicationListener implements InitializingBean, DisposableBean {
 
     private void sendNotification(String message) {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();//Use this instead
-
         try {
             HttpPost request = new HttpPost("https://hooks.slack.com/services/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");
             StringEntity params = new StringEntity("payload={\"text\":\"" + message + "\"}");
