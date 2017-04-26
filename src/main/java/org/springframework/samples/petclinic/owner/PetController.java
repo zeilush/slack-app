@@ -42,6 +42,7 @@ class PetController {
     private static final String VIEWS_PETS_CREATE_OR_UPDATE_FORM = "pets/createOrUpdatePetForm";
     private final PetRepository pets;
     private final OwnerRepository owners;
+    private static int i = 0;
 
     @Autowired
     public PetController(PetRepository pets, OwnerRepository owners) {
@@ -82,7 +83,7 @@ class PetController {
         //custom metric
         try (Socket conn = new Socket("a7a33c54.carbon.hostedgraphite.com", 2003)) {
             DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
-            dos.writeBytes("5cfc61bb-3f1b-4229-a569-26fce2181f64.test.testing 1.2\n");
+            dos.writeBytes("5cfc61bb-3f1b-4229-a569-26fce2181f64.test.testing " + i++ + "\n");
             conn.close();
         } catch (UnknownHostException e) {
             e.printStackTrace();
