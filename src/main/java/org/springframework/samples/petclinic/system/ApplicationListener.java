@@ -1,5 +1,10 @@
 package org.springframework.samples.petclinic.system;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
@@ -23,10 +28,12 @@ public class ApplicationListener implements InitializingBean, DisposableBean {
     public void destroy() throws Exception {
         run = false;
         System.out.println("I am destroyed");
+        sendNotification("I am destroyed");
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        sendNotification("I am alive");
 
         ExecutorService executorService = Executors.newFixedThreadPool(1);
         executorService.execute(() -> {
@@ -44,5 +51,24 @@ public class ApplicationListener implements InitializingBean, DisposableBean {
             System.out.println("Stopping sending alive requests");
         });
         System.out.println("I am initialized");
+    }
+
+    private void sendNotification(String message) {
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();//Use this instead
+
+        try {
+            HttpPost request = new HttpPost("https://hooks.slack.com/services/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");
+            StringEntity params = new StringEntity("payload={\"text\":\"" + message + "\"}");
+            request.addHeader("content-type", "application/x-www-form-urlencoded");
+            request.setEntity(params);
+            HttpResponse response = httpClient.execute(request);
+        } catch (Exception ex) {
+
+            //handle exception here
+
+        } finally {
+            //Deprecated
+            //httpClient.getConnectionManager().shutdown();
+        }
     }
 }
