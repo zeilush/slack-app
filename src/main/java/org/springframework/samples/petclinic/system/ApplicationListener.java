@@ -33,7 +33,7 @@ public class ApplicationListener implements InitializingBean, DisposableBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        sendNotification("I am alive");
+        sendNotification("I am alive again");
 
         ExecutorService executorService = Executors.newFixedThreadPool(1);
         executorService.execute(() -> {
@@ -50,7 +50,7 @@ public class ApplicationListener implements InitializingBean, DisposableBean {
             }
             System.out.println("Stopping sending alive requests");
         });
-        System.out.println("I am alive");
+        System.out.println("I am alive again");
     }
 
     private void sendNotification(String message) {
