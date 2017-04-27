@@ -1,2 +1,2 @@
 # slack-app
-Petclinic Application
+Petclinic Application for Heroku Deployments.
